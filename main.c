@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "include/parser.h"
+#include "include/execution.h"
 
 int main(int ac, char **av) {
     parsed_instruction_t *instructions = NULL;
@@ -20,11 +21,8 @@ int main(int ac, char **av) {
     }
     instructions = parse_file(content);
 
-    for (int i = 0; instructions[i].instruction != NULL; i++) {
-        char **parameters = split_parameters(instructions[i].params);
-        instructions[i].instruction->func(cpu, (const char **)parameters);
-        free(parameters);
-    }
+    for (int i = 0; instructions[i].instruction != NULL; i++)
+        execute_instruction(cpu, &(instructions[i]));
     free(instructions);
     free(content);
     return 0;

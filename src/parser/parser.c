@@ -22,7 +22,7 @@ static instruction_t const *get_instruction_from_name(char *name) {
     return NULL;
 }*/
 
-static int count_number_of_instructions(char *str)
+static int count_number_of_instructions(char const *str)
 {
     int count = 0;
 
@@ -49,9 +49,11 @@ parsed_instruction_t *parse_file(char *str)
         parsed_instructions[i].params = instruction_params;
         if (!instruction->lexer(instruction_params)) {
             fprintf(stderr, "Error: Invalid parameters (%s) for instruction %s (parser.c)\n", instruction_params, instruction_name);
+            free(instruction_name);
             free(parsed_instructions);
             return NULL;
         }
+        free(instruction_name);
         str = NULL;
     }
     return parsed_instructions;
