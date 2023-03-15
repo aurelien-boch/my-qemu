@@ -7,5 +7,4 @@ void execute_instruction(cpu_t *cpu, parsed_instruction_t const *instruction)
 
     instruction->instruction->func(cpu, (const char **)parameters);
     free(parameters);
-    free(instruction->params);
 }

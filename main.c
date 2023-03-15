@@ -20,9 +20,10 @@ int main(int ac, char **av) {
         return 1;
     }
     instructions = parse_file(content);
-
     for (int i = 0; instructions[i].instruction != NULL; i++)
         execute_instruction(cpu, &(instructions[i]));
+    for (int i = 0; instructions[i].instruction != NULL; i++)
+        free(instructions[i].params);
     free(instructions);
     free(content);
     return 0;
